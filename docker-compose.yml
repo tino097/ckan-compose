@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    container_name: posgres
+    container_name: postgres
     build:
       context: postgres/
       args:
@@ -14,15 +14,11 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     network_mode: host
-    ports:
-      - "5432:5432"
 
   solr:
     container_name: solr
     build:
       context: solr/
-    ports:
-      - "8983:8983"
     network_mode: host
     volumes:
       - solr_data:/opt/solr/server/solr/ckan/data/index
