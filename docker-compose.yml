@@ -23,11 +23,11 @@ services:
     volumes:
       - solr_data:/opt/solr/server/solr/ckan/data/index
   
-  datapusher:
-    container_name: datapusher
-    build: 
-      context: datapusher/
-    network_mode: host
+  # datapusher:
+  #   container_name: datapusher
+  #   build: 
+  #     context: datapusher/
+  #   network_mode: host
 
 
   redis:
