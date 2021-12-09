@@ -4,7 +4,9 @@
 
 FROM amazeeio/solr:6.6
 
-COPY solr/config /solr-conf/conf
+#COPY solr-2.9/config /solr-conf/conf
+COPY solr-2.8/config /solr-conf/conf
+
 
 RUN precreate-core ckan /solr-conf
 
