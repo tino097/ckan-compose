@@ -19,7 +19,6 @@ services:
     container_name: solr
     build:
       context: solr/
-    isolation: default
     network_mode: host
     volumes:
       - solr_data:/opt/solr/server/solr/ckan/data/index
