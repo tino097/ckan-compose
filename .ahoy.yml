@@ -33,3 +33,13 @@
     cli:
       usage: Start a shell inside a container.
       cmd: docker-compose exec "$@" sh
+    ps:
+      usage: Check processes running inside the container.
+      cmd: docker-compose ps
+    logs:
+      usage: View logs.
+      cmd: docker-compose logs "$@"
+    restart:
+      usage: Restart the project.
+      cmd: docker-compose restart "$@"
+      
