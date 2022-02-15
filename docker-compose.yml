@@ -27,6 +27,16 @@ services:
     image: redis:alpine
     network_mode: host
 
+  mindsdb:
+    container_name: mindsdb
+    image: mindsdb/mindsdb:latest
+    network_mode: host
+    volumes:
+      - mindsdb_data:/opt/mindsdb/data
+    depends_on:
+      - db
+
 volumes:
   pg_data:
   solr_data:
+  mindsdb_data:
