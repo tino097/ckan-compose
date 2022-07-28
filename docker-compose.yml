@@ -1,16 +1,18 @@
 version: "3"
 
 services:
-  db:
+  postgres:
     container_name: postgres
     build:
       context: postgres/
+      dockerfile: Dockerfile
       args:
         - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
         - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     environment:
       - DATASTORE_READONLY_PASSWORD=${DATASTORE_READONLY_PASSWORD}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGDATA=/var/lib/postgresql/data/db
     volumes:
       - pg_data:/var/lib/postgresql/data
     network_mode: host
@@ -27,6 +29,16 @@ services:
     image: redis:alpine
     network_mode: host
 
+  mindsdb:
+    container_name: mindsdb
+    image: mindsdb/mindsdb:latest
+    network_mode: host
+    volumes:
+      - mindsdb_data:/opt/mindsdb/data
+    depends_on:
+      - db
+
 volumes:
   pg_data:
   solr_data:
+  mindsdb_data:
