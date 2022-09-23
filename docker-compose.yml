@@ -19,7 +19,9 @@ services:
 
   solr:
     container_name: solr
-    image: ckan/ckan-solr:master
+    build:
+      context: solr/
+      dockerfile: Dockerfile
     network_mode: host
     volumes:
       - solr_data:/opt/solr/server/solr/ckan/data/index
