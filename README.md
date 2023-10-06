@@ -34,8 +34,6 @@ A Docker-compose based setup for CKAN with support for running commands via Ahoy
 
 ```bash
 ahoy generate-env
-
-```bash
 ahoy up
 ```
 
