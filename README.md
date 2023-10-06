@@ -1,10 +1,9 @@
 # CKAN COMPOSE 🐳 
 
-BADGES
 
 ## Overview
 
-A Docker-compose based setup for CKAN with support for running commands via Ahoy.
+A Docker-compose based setup for CKAN with support for running commands via Ahoy. This is really lightweight development environment for CKAN. It is not intended for production use. 
 
 ## 🌟 Features
 
