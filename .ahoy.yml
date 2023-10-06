@@ -44,20 +44,24 @@
       cmd: docker-compose restart "$@"
 
     generate-env:
-    usage: Generate a .env file with values entered via prompt.
-    cmd: |
-      echo "Generating .env file..."
-      if [ -f ".env" ]; then
-        echo ".env file already exists. Skipping..."
-      else
-        read -p "Enter value for PROJECT_NAME: " project_name
-        read -p "Enter value for DATASTORE_READONLY_PASSWORD: " datastore_readonly_password
-        read -p "Enter value for POSTGRES_PASSWORD: " postgres_password
-        
-        echo "PROJECT_NAME=$project_name" > .env
-        echo "DATASTORE_READONLY_PASSWORD=$datastore_readonly_password" >> .env
-        echo "POSTGRES_PASSWORD=$postgres_password" >> .env
+      usage: Generate a .env file with values entered via prompt.
+      cmd: |
+        echo "Generating .env file..."
+        if [ -f ".env" ]; then
+          echo ".env file already exists. Skipping..."
+        else
+          read -p "Enter value for PROJECT_NAME: " project_name
+          read -p "Enter value for DATASTORE_READONLY_PASSWORD (leave blank for 'pass'): " datastore_readonly_password
+          read -p "Enter value for POSTGRES_PASSWORD (leave blank for 'pass'): " postgres_password
+          
+          # Check for blank values and assign default if necessary
+          [ -z "$datastore_readonly_password" ] && datastore_readonly_password="pass"
+          [ -z "$postgres_password" ] && postgres_password="pass"
 
-        echo ".env file has been created!"
-      fi
+          echo "PROJECT_NAME=$project_name" > .env
+          echo "DATASTORE_READONLY_PASSWORD=$datastore_readonly_password" >> .env
+          echo "POSTGRES_PASSWORD=$postgres_password" >> .env
+
+          echo ".env file has been created!"
+        fi
       
