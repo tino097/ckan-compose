@@ -17,14 +17,16 @@ services:
       - type: volume
         source: pg_data
         target: /var/lib/postgresql/data
-    network_mode: host
+    ports:
+      - "5432:5432"
 
   solr:
     container_name: ${PROJECT_NAME}-solr
     build:
       context: solr/
       dockerfile: Dockerfile
-    network_mode: host
+    ports:
+      - "8983:8983"
     volumes:
       - type: volume
         source: solr_data
@@ -33,7 +35,8 @@ services:
   redis:
     container_name: ${PROJECT_NAME}-redis
     image: redis:alpine
-    network_mode: host
+    ports:
+      - "6379:6379"
 
 
 volumes:
