@@ -64,4 +64,23 @@
 
           echo ".env file has been created!"
         fi
-      
+
+    import-db:
+      usage: Import a database dump.
+      cmd: |
+        if [ -f "$@" ]; then
+          docker-compose cp "$@" db:/tmp
+          docker-compose exec -T db pg_restore -U ckan_default -d ckan_default  /tmp/"$@"
+        else
+          echo "File not found. Please check the path and try again."
+        fi
+    
+    import-datastore:
+      usage: Import a datastore dump.
+      cmd: |
+        if [ -f "$@" ]; then
+          docker-compose exec -T db pg_restore -U ckan_default -d datastore_default -f "$@"
+        else
+          echo "File not found. Please check the path and try again."
+        fi
+    
