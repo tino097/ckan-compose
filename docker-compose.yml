@@ -37,6 +37,18 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
+  
+  datapusher:
+    container_name: ${PROJECT_NAME}-datapusher
+    build:
+      context: datapusher-plus/
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - WRITE_ENGINE_URL='postgresql://ckan_default:pass@db/datastore_default'
+      - SQLALCHEMY_DATABASE_URI='postgresql://ckan_default:pass@db/ckan_default'
+    ports:
+      - "8800:8800"
 
 
 volumes:
