@@ -1,5 +1,5 @@
 
-FROM solr:8.11.2
+FROM solr:9
 
 EXPOSE 8983
 
@@ -26,6 +26,8 @@ RUN chmod 644 $SOLR_SCHEMA_FILE
 ADD https://repo1.maven.org/maven2/org/locationtech/jts/jts-core/$JTS_VERSION/jts-core-$JTS_VERSION.jar \
     $JTS_JAR_FILE
 RUN chmod 644 $JTS_JAR_FILE
+
+RUN touch $SOLR_CONFIG_DIR/ckan/conf/solrconfig.xml
 
 
 USER solr

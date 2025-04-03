@@ -30,13 +30,20 @@ services:
     volumes:
       - type: volume
         source: solr_data
-        target: /opt/solr/server/solr/ckan/data/index
+        target: /opt/solr/server/solr
 
   redis:
     container_name: ${PROJECT_NAME}-redis
     image: redis:alpine
     ports:
       - "6379:6379"
+
+  mailcatcher:
+    restart: on-failure
+    image: haravich/fake-smtp-server
+    ports:
+    - "1080:1080"
+    - "1025:1025"
 
 
 volumes:
