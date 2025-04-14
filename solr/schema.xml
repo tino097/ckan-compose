@@ -175,6 +175,7 @@ attribute with the form `ckan-X.Y` -->
     <field name="spatial_geom_*"  type="location_rpt" indexed="true" stored="true" multiValued="true" />
 
     <field name="spatial_simp" type="location_rpt" indexed="true" stored="true" multiValued="true"/>
+    <field name="place_keywords" type="string" indexed="true" stored="true" multiValued="true"/>
 
 
     <field name="indexed_ts" type="date" indexed="true" stored="true" default="NOW" multiValued="false"/>
