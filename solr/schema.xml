@@ -221,5 +221,6 @@ attribute with the form `ckan-X.Y` -->
 <copyField source="res_description" dest="text"/>
 <copyField source="maintainer" dest="text"/>
 <copyField source="author" dest="text"/>
+<copyField source="place_keywords" dest="text" />
 
 </schema>
