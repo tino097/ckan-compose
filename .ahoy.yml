@@ -5,22 +5,22 @@
     up:
       usage: Build and start project.
       cmd: |
-        docker-compose up -d "$@"
+        docker compose up -d "$@"
 
     stop:
       usage: Stops the project
       cmd: |
-        docker-compose stop "$@"
+        docker compose stop "$@"
   
     down:
       usage: Delete project (CAUTION).
       cmd: |
         if [ "$1" == "y" ]; then
-          docker-compose down --volumes
+          docker compose down --volumes
         else
           ahoy confirm "Running this command will destroy your current site, database and build? Are you sure you didn't mean ahoy stop?" &&
           # Run this if confirm returns true
-          docker-compose down --volumes ||
+          docker compose down --volumes ||
           # Run this if confirm returns false
           echo "OK, probably a wise choice..."
         fi
@@ -28,20 +28,20 @@
     build:
       usage: Build project.
       cmd: |
-        docker-compose up -d --build "$@"
+        docker compose up -d --build "$@"
 
     cli:
       usage: Start a shell inside a container.
-      cmd: docker-compose exec "$@" sh
+      cmd: docker compose exec "$@" sh
     ps:
       usage: Check processes running inside the container.
-      cmd: docker-compose ps
+      cmd: docker compose ps
     logs:
       usage: View logs.
-      cmd: docker-compose logs "$@"
+      cmd: docker compose logs "$@"
     restart:
       usage: Restart the project.
-      cmd: docker-compose restart "$@"
+      cmd: docker compose restart "$@"
 
     generate-env:
       usage: Generate a .env file with values entered via prompt.
@@ -69,8 +69,8 @@
       usage: Import a database dump.
       cmd: |
         if [ -f "$@" ]; then
-          docker-compose cp "$@" db:/tmp
-          docker-compose exec -T db pg_restore -U ckan_default -d ckan_default  /tmp/"$@"
+          docker compose cp "$@" db:/tmp
+          docker compose exec -T db pg_restore -U ckan_default -d ckan_default  /tmp/"$@"
         else
           echo "File not found. Please check the path and try again."
         fi
@@ -79,7 +79,7 @@
       usage: Import a datastore dump.
       cmd: |
         if [ -f "$@" ]; then
-          docker-compose exec -T db pg_restore -U ckan_default -d datastore_default -f "$@"
+          docker compose exec -T db pg_restore -U ckan_default -d datastore_default -f "$@"
         else
           echo "File not found. Please check the path and try again."
         fi
