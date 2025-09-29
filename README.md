@@ -21,13 +21,15 @@ A Docker-compose based setup for CKAN with support for running commands via Ahoy
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Ahoy](https://github.com/ahoy-cli/ahoy)
 
+> **_NOTE:_** It is recommended to use the latest versions of Docker and Docker Compose.
+
 ## 🚀 Setup
 
 1. **Clone the repository:**
 
-   ```bash
-   git clone https://github.com/tino097/ckan-compose.git
-   cd ckan-compose
+```bash
+git clone https://github.com/tino097/ckan-compose.git
+cd ckan-compose
 
 ## 📦 Usage
 
