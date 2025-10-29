@@ -1,35 +1,30 @@
-
 FROM solr:9
 
 EXPOSE 8983
 
-# TODO: Update with new release branch when merged
-ARG CKAN_BRANCH="master"
-
-ENV SOLR_CONFIG_DIR="/opt/solr/server/solr/configsets"
-ENV SOLR_SCHEMA_FILE="$SOLR_CONFIG_DIR/ckan/conf/managed-schema"
-
-ARG JTS_VERSION="1.19.0"
-ARG JTS_JAR_FILE="/opt/solr/server/solr-webapp/webapp/WEB-INF/lib/jts-core-$JTS_VERSION.jar"
-
 USER root
 
-# Create a CKAN configset by copying the default one
-RUN cp -R $SOLR_CONFIG_DIR/_default $SOLR_CONFIG_DIR/ckan
+# Set environment variables
+ENV SOLR_CONFIG_DIR="/opt/solr/server/solr/configsets"
+ENV CKAN_CONFIGSET_DIR="$SOLR_CONFIG_DIR/ckan"
 
-# Update the schema
-# ADD https://raw.githubusercontent.com/ckan/ckan/$CKAN_BRANCH/ckan/config/solr/schema.xml $SOLR_SCHEMA_FILE
-ADD schema.xml $SOLR_SCHEMA_FILE
-RUN chmod 644 $SOLR_SCHEMA_FILE 
+# JTS version for spatial support
+ARG JTS_VERSION="1.19.0"
 
-# Install JTS JAR file
-ADD https://repo1.maven.org/maven2/org/locationtech/jts/jts-core/$JTS_VERSION/jts-core-$JTS_VERSION.jar \
-    $JTS_JAR_FILE
-RUN chmod 644 $JTS_JAR_FILE
+# Create CKAN configset
+RUN cp -R $SOLR_CONFIG_DIR/_default $CKAN_CONFIGSET_DIR
 
-RUN touch $SOLR_CONFIG_DIR/ckan/conf/solrconfig.xml
+# Copy custom schema
+COPY managed-schema $CKAN_CONFIGSET_DIR/conf/managed-schema
 
+# Download and install JTS library for spatial queries
+RUN wget -q -O /opt/solr/server/solr-webapp/webapp/WEB-INF/lib/jts-core-${JTS_VERSION}.jar \
+    https://repo1.maven.org/maven2/org/locationtech/jts/jts-core/${JTS_VERSION}/jts-core-${JTS_VERSION}.jar
+
+# Set permissions
+RUN chown -R solr:solr $CKAN_CONFIGSET_DIR
 
 USER solr
 
-CMD ["sh", "-c", "solr-precreate ckan $SOLR_CONFIG_DIR/ckan"]
+# Create the ckan core on startup
+CMD ["sh", "-c", "solr-precreate ckan $CKAN_CONFIGSET_DIR"]
